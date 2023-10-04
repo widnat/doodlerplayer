@@ -4,8 +4,8 @@ import { PlayerComponent } from './player/player.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: 'doodler/player/', component: AppComponent },
-  { path: 'doodler/player/:gameId', component: PlayerComponent },
+  { path: '', component: AppComponent },
+  { path: ':gameId', component: PlayerComponent },
 ];
 
 @NgModule({
