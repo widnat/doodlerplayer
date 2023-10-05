@@ -1,10 +1,13 @@
-GAMEID: {{gameId}}
-
-<!-- <div>
-  <Title title="Doodler" page="" />
+<div>
+  <h1 className="flex justify-center text-6xl py-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-gray-800">
+    {{title}}
+  </h1>
+  <div *ngIf="hasConstructed">
+    <JoinGame action="{joinGame}" />
+  </div>
   {connected && component === PlayerComponent.JoinGame && (
-  <JoinGame action="{joinGame}" />
-  )} {connected && component === PlayerComponent.CreateAssignmentDoodle && (
+   )}
+  <!-- {connected && component === PlayerComponent.CreateAssignmentDoodle && (
   <CreateAssignmentDoodle
     action="{submitAssignmentDoodle}"
     assignment="{doodleAssignment}"
@@ -25,3 +28,4 @@ GAMEID: {{gameId}}
   </div>
   )}
 </div> -->
+</div>

@@ -7,7 +7,7 @@ export enum PresenterComponent {
     Results
   }
 
-  export enum PlayerComponent {
+  export enum PlayerComponentEnum {
     JoinGame,
     CreateAssignmentDoodle,
     WaitingForOtherPlayers,
