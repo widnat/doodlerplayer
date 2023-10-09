@@ -1,29 +1,31 @@
 <div>
-  <h1 className="flex justify-center text-6xl py-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-gray-800">
-    {{title}}
+  <h1
+    class="flex justify-center text-6xl py-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-gray-800"
+  >
+    {{ title }}
   </h1>
   <div *ngIf="hasConstructed">
-    <JoinGame action="{joinGame}" />
+    <join-game action="{joinGame}" />
   </div>
-  {connected && component === PlayerComponent.JoinGame && (
-   )}
+  <!-- {connected && component === PlayerComponent.JoinGame && (
+   )} -->
   <!-- {connected && component === PlayerComponent.CreateAssignmentDoodle && (
   <CreateAssignmentDoodle
     action="{submitAssignmentDoodle}"
     assignment="{doodleAssignment}"
   />
   )} {connected && component === PlayerComponent.WaitingForOtherPlayers && (
-  <div className="h-screen">
-    <div className="flex items-center justify-center">
+  <div class="h-screen">
+    <div class="flex items-center justify-center">
       sit back and relax while the others guess!
     </div>
   </div>
   )} {connected && component === PlayerComponent.PlayersFirstGuess && (
-  <div className="h-screen">
+  <div class="h-screen">
     <PlayersFirstGuess submitGuess="{submitFirstGuess}" />
   </div>
   )} {connected && component === PlayerComponent.PlayersSecondGuess && (
-  <div className="h-screen">
+  <div class="h-screen">
     <PlayersSecondGuess submitGuess="{submitSecondGuess}" options="{options}" />
   </div>
   )}
