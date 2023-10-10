@@ -10,7 +10,6 @@ const ws = webSocket(
 @Component({
   selector: 'player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit {
   sendMessageAction = 'sendmessage';
@@ -20,6 +19,10 @@ export class PlayerComponent implements OnInit {
   options: Array<string> = new Array<string>();
   gameId: string = '';
   title: string = 'Doodler';
+  waitingMessage: string = 'sit back and relax while the others guess!';
+  playerComponentEnum = PlayerComponentEnum;
+  guess: string = '';
+
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -67,12 +70,12 @@ export class PlayerComponent implements OnInit {
     this.sendMessage(MessageType.SubmitAssignmentDoodle, doodleURL);
   }
 
-  submitFirstGuess(guess: string) {
-    this.sendMessage(MessageType.SubmitFirstGuess, guess);
+  submitFirstGuess() {
+    this.sendMessage(MessageType.SubmitFirstGuess, this.guess);
   }
 
-  submitSecondGuess(guess: string) {
-    this.sendMessage(MessageType.SubmitSecondGuess, guess);
+  submitSecondGuess() {
+    this.sendMessage(MessageType.SubmitSecondGuess, this.guess);
   }
 
   sendMessage(type: MessageType, value: string) {

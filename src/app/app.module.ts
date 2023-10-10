@@ -9,6 +9,8 @@ import { JoinGameComponent } from './components/join-game/join-game.component';
 import { BasicInputComponent } from './components/basic-input/basic-input.component';
 import { DrawingAreaComponent } from './components/drawing-area/drawing-area.component';
 import { BasicButtonComponent } from './components/basic-button/basic-button.component';
+import { FirstGuessComponent } from './components/first-guess/first-guess.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { BasicButtonComponent } from './components/basic-button/basic-button.com
     JoinGameComponent,
     BasicInputComponent,
     DrawingAreaComponent,
-    BasicButtonComponent
+    BasicButtonComponent,
+    FirstGuessComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

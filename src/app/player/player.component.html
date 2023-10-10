@@ -5,29 +5,26 @@
     {{ title }}
   </h1>
   <div *ngIf="hasConstructed">
-    <join-game action="{joinGame}" />
-  </div>
-  <!-- {connected && component === PlayerComponent.JoinGame && (
-   )} -->
-  <!-- {connected && component === PlayerComponent.CreateAssignmentDoodle && (
-  <CreateAssignmentDoodle
+    <!-- <join-game *ngIf="component === playerComponentEnum.JoinGame" action="{joinGame}" />
+    <CreateAssignmentDoodle
+    *ngIf="component === playerComponentEnum.CreateAssignmentDoodle"
     action="{submitAssignmentDoodle}"
     assignment="{doodleAssignment}"
-  />
-  )} {connected && component === PlayerComponent.WaitingForOtherPlayers && (
-  <div class="h-screen">
+  /> -->
+  <div *ngIf="component === playerComponentEnum.WaitingForOtherPlayers" class="h-screen">
     <div class="flex items-center justify-center">
-      sit back and relax while the others guess!
+      {{waitingMessage}}
     </div>
   </div>
-  )} {connected && component === PlayerComponent.PlayersFirstGuess && (
-  <div class="h-screen">
-    <PlayersFirstGuess submitGuess="{submitFirstGuess}" />
+  <div *ngIf="component === playerComponentEnum.PlayersFirstGuess" class="h-screen">
+    <first-guess [submitFirstGuess]="submitFirstGuess()" [guess]="guess" />
   </div>
-  )} {connected && component === PlayerComponent.PlayersSecondGuess && (
+  <!-- 
+  {connected && component === playerComponentEnum.PlayersSecondGuess && (
   <div class="h-screen">
     <PlayersSecondGuess submitGuess="{submitSecondGuess}" options="{options}" />
   </div>
   )}
 </div> -->
+</div>
 </div>
