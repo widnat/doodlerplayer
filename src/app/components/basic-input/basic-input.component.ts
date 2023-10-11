@@ -11,13 +11,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 				<input
 					class="appearance-none block w-full text-gray-700 border border-green-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
 					type="text"
-					value=userInput
+					(keyup)="onKey($event)"
 				/>
 			</div>
 		</div>
   `,
 })
 export class BasicInputComponent {
-  @Input() title: string = '';
-  @Input() userInput: string = '';
+  @Input() title!: string;
+  @Output() setValue = new EventEmitter<string>();
+
+  onKey(event: any) {
+    this.setValue.emit(event.target.value);
+  }
 }

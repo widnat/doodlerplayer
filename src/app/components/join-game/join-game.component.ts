@@ -1,28 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AddPlayerMessage } from 'src/app/types';
 
 @Component({
   selector: 'join-game',
   template: `
     <div *ngIf="!waiting" class="h-screen">
-      <basic-input [title]=playerInputTitle [userInput]=playerName />
+      <basic-input [title]="playerInputTitle" (setValue)="setPlayerName($event)" />
       <!-- <DrawingArea action={doneDrawing} actionText="Join Game" /> -->
     </div>
     <div *ngIf="waiting" class="h-screen">
-      <!-- <Spinner message="waiting for other players to begin..." /> -->
+      <spinner [message]="spinnerMessage" />
     </div>
   `,
 })
-
 export class JoinGameComponent {
-  @Input() action!: any;
+  @Output() action = new EventEmitter<AddPlayerMessage>();
   waiting: boolean = false;
   playerName: string = '';
-  playerInputTitle = "Enter you name";
+  playerInputTitle = 'Enter you name';
+  spinnerMessage = 'waiting for other players to begin...';
+
+  setPlayerName(newName: string) {
+    this.playerName = newName;
+  }
 
   doneDrawing(doodleURL: string) {
-		if (this.playerName) {
-			this.waiting = true;
-			this.action(this.playerName, doodleURL);
-		} else alert("Please enter a name");
-	}
+    if (this.playerName) {
+      this.waiting = true;
+      this.action.emit({ name: this.playerName, imageUrl: doodleURL });
+    } else alert('Please enter a name');
+  }
 }
