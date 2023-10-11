@@ -6,9 +6,9 @@ import { Component, Input } from '@angular/core';
     <button
       type="button"
       class="p-2 rounded-md border border-black"
-      onClick="{action}"
+      (click)="action()"
     >
-      text
+     {{text}}
     </button>
   `
 })

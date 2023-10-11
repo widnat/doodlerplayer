@@ -6,6 +6,7 @@ import { AddPlayerMessage } from 'src/app/types';
   template: `
     <div *ngIf="!waiting" class="h-screen">
       <basic-input [title]="playerInputTitle" (setValue)="setPlayerName($event)" />
+      <drawing-area/>
       <!-- <DrawingArea action={doneDrawing} actionText="Join Game" /> -->
     </div>
     <div *ngIf="waiting" class="h-screen">

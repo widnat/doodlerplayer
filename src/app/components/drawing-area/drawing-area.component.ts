@@ -1,107 +1,62 @@
-import { Component, Input } from '@angular/core';
-import { Point, Draw } from '../../types';
-import { useDraw } from "../../hooks/doodler";
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-drawing-area',
-  templateUrl: './drawing-area.component.html'
+  selector: 'drawing-area',
+  templateUrl: './drawing-area.component.html',
 })
-export class DrawingAreaComponent {
-	@Input() action: any;
-	@Input() actionText: string = '';
-	color: string = "black";
-	// {CanvasCaptureMediaStreamTrack, onMouseDown, clear } = useDraw(drawLine);
+export class DrawingAreaComponent implements AfterViewInit {
+  @ViewChild('drawingCanvas', { static: true }) drawingCanvas!: ElementRef;
+  private context!: CanvasRenderingContext2D;
+  private isDrawing = false;
+  selectedColor = '#000000';
+  clearButtonText = 'Clear Drawing';
+  lineWidth = 2; 
 
-	// drawLine({ prevPoint, currentPoint, ctx }: Draw) {
-	// 	const { x: currX, y: currY } = currentPoint;
-	// 	const lineColor = colorRef.current;
+  ngAfterViewInit() {
+    this.context = this.drawingCanvas.nativeElement.getContext('2d');
+  }
 
-	// 	let startPoint = prevPoint ?? currentPoint;
-	// 	ctx.beginPath();
-	// 	ctx.lineWidth = lineWidthRef.current;
-	// 	ctx.strokeStyle = lineColor;
-	// 	ctx.moveTo(startPoint.x, startPoint.y);
-	// 	ctx.lineTo(currX, currY);
-	// 	ctx.stroke();
+  startDrawing(event: MouseEvent) {
+    this.isDrawing = true;
+	this.context.lineWidth = this.lineWidth;
+    this.context.beginPath();
+    this.context.moveTo(
+      event.clientX -
+        this.drawingCanvas.nativeElement.getBoundingClientRect().left,
+      event.clientY -
+        this.drawingCanvas.nativeElement.getBoundingClientRect().top
+    );
+  }
 
-	// 	ctx.fillStyle = lineColor;
-	// 	ctx.beginPath();
-	// 	ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
-	// 	ctx.fill();
-	// }
+  draw(event: MouseEvent) {
+    if (!this.isDrawing) return;
+    this.context.strokeStyle = this.selectedColor;
+	this.context.lineWidth = this.lineWidth;
+    this.context.lineTo(
+      event.clientX -
+        this.drawingCanvas.nativeElement.getBoundingClientRect().left,
+      event.clientY -
+        this.drawingCanvas.nativeElement.getBoundingClientRect().top
+    );
+    this.context.stroke();
+  }
+
+  endDrawing() {
+    this.isDrawing = false;
+    this.context.closePath();
+  }
+
+  clearCanvas() {
+    this.context.clearRect(
+      0,
+      0,
+      this.drawingCanvas.nativeElement.width,
+      this.drawingCanvas.nativeElement.height
+    );
+  }
+
+  setLineWidth(event: Event) {
+	this.lineWidth = +(<HTMLInputElement>event.target).value;
+  }
+  
 }
-
-
-
-// export default function DrawingArea({ action, actionText }: Props) {
-// 	const colorRef = useRef(color);
-// 	const setColor = (newColor: string) => {
-// 		colorRef.current = newColor;
-// 		_setColor(newColor);
-// 	};
-// 	const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
-// 	const [lineWidth, _setLineWidth] = useState(5);
-// 	const lineWidthRef = useRef(lineWidth);
-// 	const setLineWidth = (newLineWidth: number) => {
-// 		lineWidthRef.current = newLineWidth;
-// 		_setLineWidth(newLineWidth);
-// 	};
-// 	const [canvasWidth, setCanvasWidth] = useState(50);
-// 	const [canvasHeight, setCanvasHeight] = useState(50);
-// 	var canvasTop = 0;
-// 	var lastx = 0;
-// 	var lasty = 0;
-
-	
-
-// 	function handleResize() {
-// 		setCanvasWidth(window.innerWidth * 0.7);
-// 		setCanvasHeight(window.innerWidth * 0.7);
-// 	}
-
-// 	useEffect(() => {
-// 		var top = canvasRef.current?.offsetTop;
-// 		canvasTop = top ? top : 0;
-// 		handleResize();
-// 		canvasRef.current?.addEventListener("touchstart", (e) => {
-// 			e.preventDefault();
-// 			lastx = e.touches[0].clientX;
-// 			lasty = e.touches[0].clientY - canvasTop;
-// 			var lastPoint = {
-// 				x: lastx,
-// 				y: lasty,
-// 			} as Point;
-// 			drawLine({
-// 				prevPoint: lastPoint,
-// 				currentPoint: lastPoint,
-// 				ctx: canvasRef.current?.getContext("2d"),
-// 			} as Draw);
-// 		});
-// 		canvasRef.current?.addEventListener("touchmove", (e) => {
-// 			e.preventDefault();
-// 			var newx = e.touches[0].clientX;
-// 			var newy = e.touches[0].clientY - canvasTop;
-// 			var lastPoint = {
-// 				x: lastx,
-// 				y: lasty,
-// 			} as Point;
-// 			var currentPoint = {
-// 				x: newx,
-// 				y: newy,
-// 			} as Point;
-// 			drawLine({
-// 				prevPoint: lastPoint,
-// 				currentPoint: currentPoint,
-// 				ctx: canvasRef.current?.getContext("2d"),
-// 			} as Draw);
-// 			lastx = newx;
-// 			lasty = newy;
-// 		});
-// 	}, []);
-
-//     submit() {
-// 		var doodleURL = canvasRef.current?.toDataURL();
-// 		action(doodleURL);
-// 	}
-
-// }
